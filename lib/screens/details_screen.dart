@@ -16,11 +16,16 @@ class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formattedDate = DateFormat.yMMMMEEEEd('ar').format(journal.date);
+    final localizations = AppLocalizations.of(context)!;
+    final provider = Provider.of<JournalProvider>(context);
+
     return Directionality(
-      textDirection: ui.TextDirection.rtl,
+      textDirection: provider.locale.languageCode == 'ar'
+          ? ui.TextDirection.rtl
+          : ui.TextDirection.ltr,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('تفاصيل الملاحظة'),
+          title: Text(localizations.details),
           actions: [
             IconButton(
               icon: const Icon(Icons.edit),
@@ -98,16 +103,18 @@ class DetailsScreen extends StatelessWidget {
   }
 
   void _confirmDelete(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('حذف الملاحظة'),
-          content: const Text('هل أنت متأكد أنك تريد حذف هذه الملاحظة؟'),
+          title: Text(localizations.deleteEntryTitle),
+          content: Text(localizations.deleteEntryConfirm),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('إلغاء'),
+              child: Text(localizations.cancel),
             ),
             TextButton(
               onPressed: () {
@@ -118,7 +125,8 @@ class DetailsScreen extends StatelessWidget {
                 Navigator.pop(context);
                 Navigator.pop(context);
               },
-              child: const Text('حذف', style: TextStyle(color: Colors.red)),
+              child: Text(localizations.delete,
+                  style: const TextStyle(color: Colors.red)),
             ),
           ],
         );

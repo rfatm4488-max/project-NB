@@ -24,7 +24,6 @@ class _AddEntryScreenState extends State<AddEntryScreen> {
   String _category = 'يومي';
 
   final List<String> moods = ['😍', '😊', '😐', '😔', '😡', '😴'];
-  final List<String> categories = ['يومي', 'عملي', 'أفكار', 'ذكريات'];
 
   @override
   void initState() {
